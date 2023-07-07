@@ -4,7 +4,15 @@ import { useStoreModal } from "@/hooks/use-store-modal";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
+import { Button } from "../ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../ui/form";
 import { Input } from "../ui/input";
 import { Modal } from "../ui/modal";
 
@@ -46,9 +54,17 @@ const StoreModal = () => {
                     <FormControl>
                       <Input placeholder="Just Buy" {...field} />
                     </FormControl>
+                    <FormMessage /> 
                   </FormItem>
                 )}
               />
+
+              <div className="flex items-center justify-end w-full pt-6 space-x-2">
+                <Button variant="outline" onClick={onClose}>
+                  Cancel
+                </Button>
+                <Button type="submit">Continue</Button>
+              </div>
             </form>
           </Form>
         </div>
