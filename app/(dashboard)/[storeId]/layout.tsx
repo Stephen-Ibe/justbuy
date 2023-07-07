@@ -22,6 +22,10 @@ const DashboardLayout = async ({ children, params }: Props) => {
     },
   });
 
+  if (!store) {
+    redirect("/");
+  }
+
   return (
     <>
       <h1>NavBar</h1>
