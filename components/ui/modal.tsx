@@ -1,13 +1,13 @@
 "use client";
 
-import { FC, ReactNode } from "react";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "./dialog";
+} from "@/components/ui/dialog";
+import { FC, ReactNode } from "react";
 
 type TModal = {
   title: string;
