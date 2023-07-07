@@ -2,6 +2,8 @@
 
 import { useStoreModal } from "@/hooks/use-store-modal";
 import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "../ui/button";
@@ -22,6 +24,7 @@ const FormSchema = z.object({
 
 const StoreModal = () => {
   const { isOpen, onClose } = useStoreModal();
+  const [loading, setLoading] = useState<boolean>(false);
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -31,7 +34,15 @@ const StoreModal = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof FormSchema>) => {
-    console.log(values);
+    try {
+      setLoading(true);
+      const res = await axios.post("/api/stores", values);
+
+      console.log(res.data);
+    } catch (error) {
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -52,18 +63,24 @@ const StoreModal = () => {
                   <FormItem>
                     <FormLabel>Store Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="Just Buy" {...field} />
+                      <Input
+                        placeholder="Just Buy"
+                        {...field}
+                        disabled={loading}
+                      />
                     </FormControl>
-                    <FormMessage /> 
+                    <FormMessage />
                   </FormItem>
                 )}
               />
 
               <div className="flex items-center justify-end w-full pt-6 space-x-2">
-                <Button variant="outline" onClick={onClose}>
+                <Button variant="outline" onClick={onClose} disabled={loading}>
                   Cancel
                 </Button>
-                <Button type="submit">Continue</Button>
+                <Button type="submit" disabled={loading}>
+                  Continue
+                </Button>
               </div>
             </form>
           </Form>
